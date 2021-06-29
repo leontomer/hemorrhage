@@ -31,6 +31,10 @@ function App() {
     })();
   }, [isAuthenticated]);
 
+  window.onbeforeunload = function () {
+    localStorage.clear();
+  };
+
   return (
     <ScanBleedProvider>
       <Router>

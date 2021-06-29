@@ -47,6 +47,7 @@ export default function LoginPage({ history }) {
   const { login } = useAuth();
   const { isAuthenticated } = useAuth();
   const [open, setOpen] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
 
   const [loginData, setLoginData] = useState({
     email: "",
@@ -57,8 +58,12 @@ export default function LoginPage({ history }) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   }
 
-  const handleClick = () => {
-    setOpen(true);
+  const handleClose2 = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen2(false);
   };
 
   const handleClose = (event, reason) => {
@@ -84,6 +89,12 @@ export default function LoginPage({ history }) {
         return;
       }
       const res = await axios.post("/auth/login", loginData);
+      //console.log(res);
+      // if (res.response.data.errors) {
+      //   setOpen2(true);
+      //   return;
+      // }
+
       if (res.data) login(res.data);
       finishLoading();
 
@@ -96,6 +107,8 @@ export default function LoginPage({ history }) {
       }
     } catch (error) {
       finishLoading();
+      setOpen2(true);
+
       return;
     }
   };
@@ -157,6 +170,11 @@ export default function LoginPage({ history }) {
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error">
           You must fill all fields!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={open2} autoHideDuration={6000} onClose={handleClose2}>
+        <Alert onClose={handleClose2} severity="error">
+          you entered invalid login details
         </Alert>
       </Snackbar>
     </Container>

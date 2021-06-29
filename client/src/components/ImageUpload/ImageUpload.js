@@ -77,6 +77,7 @@ export default function ImageUpload() {
   };
 
   useEffect(() => {
+    startLoading();
     (async function loadModel() {
       const brainModel = await tf.loadLayersModel(
         `${process.env.PUBLIC_URL}/model/model.json`
@@ -84,6 +85,12 @@ export default function ImageUpload() {
       setModel(brainModel);
     })();
   }, []);
+
+  useEffect(() => {
+    if (model) {
+      finishLoading();
+    }
+  }, [model]);
 
   useEffect(() => {
     (async function loadDoctors() {

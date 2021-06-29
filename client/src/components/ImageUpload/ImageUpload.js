@@ -47,7 +47,7 @@ export default function ImageUpload() {
   const [examineeId, setExamineeId] = React.useState("");
   const [doctors, setDoctors] = React.useState([]);
   const [doctorEmail, setDoctorEmail] = React.useState("");
-  const { startLoading, finishLoading } = useLoader();
+  const { startLoading, startLoadingModel, finishLoading } = useLoader();
 
   const [msg, setMsg] = React.useState(false);
   const [res, setRes] = React.useState("");
@@ -77,7 +77,7 @@ export default function ImageUpload() {
   };
 
   useEffect(() => {
-    startLoading();
+    startLoadingModel();
     (async function loadModel() {
       const brainModel = await tf.loadLayersModel(
         `${process.env.PUBLIC_URL}/model/model.json`

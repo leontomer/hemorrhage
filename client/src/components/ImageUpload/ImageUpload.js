@@ -13,6 +13,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import { useLoader } from "../../Contexts/LoaderContext";
 
 import "./imageUpload.css";
 
@@ -46,6 +47,7 @@ export default function ImageUpload() {
   const [examineeId, setExamineeId] = React.useState("");
   const [doctors, setDoctors] = React.useState([]);
   const [doctorEmail, setDoctorEmail] = React.useState("");
+  const { startLoading, finishLoading } = useLoader();
 
   const [msg, setMsg] = React.useState(false);
   const [res, setRes] = React.useState("");
@@ -101,6 +103,7 @@ export default function ImageUpload() {
 
   const predict = async () => {
     try {
+      startLoading();
       if (!file || examineeId == "" || doctorEmail == "") {
         setOpen2(true);
         return;
@@ -122,10 +125,12 @@ export default function ImageUpload() {
 
       const body = { testResult, examineeId, doctorEmail };
       await axios.post("/actions/test", body);
+
       if (testResult) setRes("positive-have hemorrhage");
       else setRes("negative-doesn't have hemorrhage");
       setOpen(true);
       setMsg(true);
+      finishLoading();
     } catch (error) {
       console.log(error);
     }

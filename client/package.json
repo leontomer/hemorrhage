@@ -45,6 +45,6 @@
   },
   "proxy": "http://localhost:6000",
   "devDependencies": {
-    "web-vitals": "^1.1.0"
+    "web-vitals": "^1.1.2"
   }
 }

@@ -31,7 +31,8 @@ function App() {
     })();
   }, [isAuthenticated]);
 
-  window.onbeforeunload = function () {
+  window.onbeforeunload = async function () {
+    await axios.post("/auth/logout");
     localStorage.clear();
   };
 

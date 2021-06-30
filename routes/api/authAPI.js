@@ -155,4 +155,23 @@ router.get(
   }
 );
 
+router.post(
+  "/logout",
+
+  userAuth,
+
+  async (req, res) => {
+    try {
+      const userID = req.user.id;
+      const user = await User.findById(userID).select("-password");
+      newlog = new Log({ actionName: "Logout", user: user.email });
+      await newlog.save();
+      res.json("ok");
+    } catch (err) {
+      console.error(err);
+      res.status(500).send(err.message);
+    }
+  }
+);
+
 module.exports = router;

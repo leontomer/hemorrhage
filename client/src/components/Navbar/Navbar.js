@@ -25,7 +25,8 @@ const Navbar = () => {
     })();
   }, [userIsAuthenticated, isAuthenticated]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await axios.post("/auth/logout");
     logout();
     setUserIsAuthenticated(false);
   };

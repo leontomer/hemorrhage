@@ -112,6 +112,7 @@ export default function ImageUpload() {
       startLoading();
       if (!file || examineeId == "" || doctorEmail == "") {
         setOpen2(true);
+        finishLoading();
         return;
       }
       const im = new Image();

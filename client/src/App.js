@@ -26,8 +26,12 @@ function App() {
 
   useEffect(() => {
     (async function getFields() {
-      const role = await axios.get("/auth/getRole");
-      setRole(role.data);
+      try {
+        const role = await axios.get("/auth/getRole");
+        setRole(role.data);
+      } catch (error) {
+        console.log("");
+      }
     })();
   }, [isAuthenticated]);
 

@@ -19,9 +19,12 @@ const Navbar = () => {
 
   useEffect(() => {
     (async function getFields() {
-      const role = await axios.get("/auth/getRole");
-      console.log(role.data);
-      seRole(role.data);
+      try {
+        const role = await axios.get("/auth/getRole");
+        seRole(role.data);
+      } catch (error) {
+        console.log("");
+      }
     })();
   }, [userIsAuthenticated, isAuthenticated]);
 

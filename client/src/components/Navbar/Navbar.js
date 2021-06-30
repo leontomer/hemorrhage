@@ -8,27 +8,34 @@ import Button from "@material-ui/core/Button";
 import "./Navbar.css";
 import axios from "axios";
 import { useAuth } from "../../Contexts/auth-context";
+import { useLoader } from "../../Contexts/LoaderContext";
 
 const Navbar = () => {
   const [role, setRole] = React.useState("");
   const { isAuthenticated } = useAuth();
   const { logout } = useAuth();
+  const { startLoading, finishLoading } = useLoader();
 
   const [userIsAuthenticated, setUserIsAuthenticated] =
     React.useState(isAuthenticated);
 
   useEffect(() => {
     (async function getFields() {
-      const role = await axios.get("/auth/getRole");
-      console.log(role.data);
-      setRole(role.data);
+      try {
+        const role = await axios.get("/auth/getRole");
+        setRole(role.data);
+      } catch (error) {
+        console.log("");
+      }
     })();
   }, [userIsAuthenticated, isAuthenticated]);
 
   const handleLogout = async () => {
+    startLoading();
     await axios.post("/auth/logout");
     logout();
     setUserIsAuthenticated(false);
+    finishLoading();
   };
 
   const useStyles = makeStyles((theme) => ({

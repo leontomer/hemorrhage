@@ -8,7 +8,6 @@ const AuthProvider = (props) => {
   );
 
   const login = (payload) => {
-    console.log(payload.token);
     localStorage.setItem("token", payload.token);
     setIsAuthenticated(true);
   };

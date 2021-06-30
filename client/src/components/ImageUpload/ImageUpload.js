@@ -95,7 +95,6 @@ export default function ImageUpload() {
   useEffect(() => {
     (async function loadDoctors() {
       const docs = await axios.get("/actions/getDoctors");
-      console.log(docs);
       setDoctors(docs.data);
     })();
   }, []);

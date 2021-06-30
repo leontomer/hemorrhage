@@ -48,7 +48,7 @@ function App() {
           {role == "Admin" && (
             <PrivateRoute exact path="/GetLogs" component={getLogs} />
           )}
-          {role == "Doctor" && (
+          {(role == "Doctor" || role == "Admin") && (
             <PrivateRoute exact path="/GetResults" component={GetResults} />
           )}
           <PrivateRoute exact path="/ImageUpload" component={ImageUpload} />

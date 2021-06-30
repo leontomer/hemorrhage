@@ -29,9 +29,13 @@ router.get("/getResults", doctorAuth, async (req, res) => {
   try {
     const userID = req.user.id;
     const user = await User.findById(userID).select("-password");
-    result = await Test.find({
-      doctorEmail: user.email,
-    });
+    if (user.role === "Doctor")
+      result = await Test.find({
+        doctorEmail: user.email,
+      });
+    else if (user.role === "Admin") {
+      result = await Test.find();
+    }
     const newlog = new Log({ actionName: "Show Test/s", user: user.email });
     await newlog.save();
     res.json(result);

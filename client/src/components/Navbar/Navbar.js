@@ -87,7 +87,7 @@ const Navbar = () => {
                 </Button>
               </Link>
             )}
-            {isAuthenticated && role == "Doctor" && (
+            {isAuthenticated && (role == "Doctor" || role == "Admin") && (
               <Link to="/GetResults">
                 <Button
                   style={{

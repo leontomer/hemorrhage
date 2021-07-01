@@ -71,11 +71,7 @@ export default function LoginPage({ history }) {
     try {
       e.preventDefault();
       startLoading();
-      if (loginData.email == "" || loginData.password == "") {
-        setOpen(true);
-        finishLoading();
-        return;
-      }
+
       const res = await axios.post("/auth/login", loginData);
 
       if (res.data) login(res.data);

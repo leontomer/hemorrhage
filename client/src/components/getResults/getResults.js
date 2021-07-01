@@ -80,7 +80,9 @@ export default function GetResults(props) {
           </Table>{" "}
         </div>
       </TableContainer>
-      <CSVLink data={results}>Download Results</CSVLink>
+      <CSVLink data={results} filename={"testResults.csv"}>
+        Download Results
+      </CSVLink>
     </div>
   );
 }

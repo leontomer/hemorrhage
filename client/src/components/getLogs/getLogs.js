@@ -104,7 +104,9 @@ export default function GetLogs(props) {
           </Table>{" "}
         </div>
       </TableContainer>
-      <CSVLink data={logs}>Download Logs</CSVLink>
+      <CSVLink data={logs} filename={"logs.csv"}>
+        Download Logs
+      </CSVLink>
     </div>
   );
 }

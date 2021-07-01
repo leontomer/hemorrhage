@@ -25,17 +25,27 @@ router.post(
   "/login",
   [
     check("email", "Please include a valid email").isEmail(),
-    check("password", "Password is required is required").exists(),
+    check("password", "Password is required").exists(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      newlog = new Log({
+        actionName: "Invalid Login Details",
+        user: "no user",
+      });
+      await newlog.save();
       return res.status(400).json({ errors: errors.array() });
     }
     const { email, password } = req.body;
     try {
       let user = await User.findOne({ email });
       if (!user) {
+        newlog = new Log({
+          actionName: "Invalid Login-Email Doesn't exist",
+          user: "no user",
+        });
+        await newlog.save();
         return res
           .status(400)
           .json({ errors: [{ msg: "Invalid Login details" }] });
@@ -44,6 +54,11 @@ router.post(
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
+        newlog = new Log({
+          actionName: "Invalid Login-Wrong Password",
+          user: "no user",
+        });
+        await newlog.save();
         return res
           .status(400)
           .json({ errors: [{ msg: "Invalid Login details" }] });
